@@ -60,8 +60,7 @@ const createUser = async function (request, response) {
 };
 
 const getUser = async function (request, response) {
-  console.log(request.user);
-  let username = request.params.username;
+  let username = request.user.username;
   console.log(username);
   try {
     const user = await Users.findOne({ username });
@@ -123,12 +122,14 @@ const authLogin = async function (request, response) {
 
     if (!user) {
       return response
-        .status(500)
+        .status(200)
         .send({ error: 1, message: "Invalid username" });
     }
     const passwordMatch = await verifyPassword(password, user.password);
     if (!passwordMatch) {
-      return response.status(401).json({ error: "Invalid Password" });
+      return response
+        .status(200)
+        .json({ error: 1, message: "Invalid Password" });
     }
     const jwtOptions = {
       audience: process.env.jwt_audience,
@@ -147,6 +148,7 @@ const authLogin = async function (request, response) {
       email: user.email,
     };
     return response.status(200).send({
+      error: 0,
       user: userResponse,
       token: jwtToken,
     });

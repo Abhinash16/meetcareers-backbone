@@ -13,7 +13,6 @@ const usersSchema = new mongoose.Schema(
     password: String,
     uid: String,
   },
-  { versionKey: false },
   { timestamps: true }
 );
 const usersSchemaModel = mongoose.model("users", usersSchema);

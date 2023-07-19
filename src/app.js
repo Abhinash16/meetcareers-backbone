@@ -3,6 +3,7 @@ const { json, urlencoded } = require("body-parser");
 var cors = require("cors");
 var mongoUtil = require("../config/mongoUtil");
 const registerUsersRoutes = require("./routes/users");
+const registerInboxRoutes = require("./routes/inbox");
 
 const app = express();
 app.use(urlencoded({ extended: true }));
@@ -14,6 +15,7 @@ mongoUtil.connectToServer(function (err, client) {
 });
 
 registerUsersRoutes(app);
+registerInboxRoutes(app);
 
 const port = process.env.PORT || 3100;
 
